@@ -33,6 +33,25 @@ project(Focus_Project C CXX ASM)
 # Initialise the Raspberry Pi Pico SDK
 pico_sdk_init()
 
+# add compiled files subdirectory
+add_subdirectory(Modules/Config)
+add_subdirectory(Modules/PushButtons)
+add_subdirectory(Modules/LCD)
+add_subdirectory(Modules/Fonts)
+add_subdirectory(Modules/GUI)
+
+add_subdirectory(Apps/Entry)
+add_subdirectory(Apps/Wallpaper)
+
+
+# add header file directory
+include_directories(./Apps/Entry)
+include_directories(./Apps/Wallpaper)
+include_directories(./Modules/Config)
+include_directories(./Modules/GUI)
+include_directories(./Modules/LCD)
+include_directories(./Modules/PushButtons)
+
 # Add executable. Default name is the project name, version 0.1
 
 add_executable(Focus_Project Focus_Project.c )
@@ -55,7 +74,15 @@ target_include_directories(Focus_Project PRIVATE
 
 # Add any user requested libraries
 target_link_libraries(Focus_Project 
-        
+    Entry
+    LCD 
+    PushButtons 
+    GUI 
+    Fonts 
+    Config
+    Wallpaper 
+    pico_stdlib 
+    hardware_spi
         )
 
 pico_add_extra_outputs(Focus_Project)
